@@ -1,2 +1,1 @@
-{:+ {:app [(:lt.objs.plugins/load-js "rolex_compiled.js")]
-     :rolex.hello [:lt.plugins.rolex/on-close-destroy]}}
+{:+ {:app [(:lt.objs.plugins/load-js "rolex_compiled.js")]}}
