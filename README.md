@@ -2,6 +2,11 @@
 
 A collection of custom watches designed to aid your debugging efforts.
 
+### Provided Watches
+
+ - Rolex: Watch selection values over time (clj, cljs)
+ - Rolex: Watch selection and log to console as js object (cljs)
+
 ### Limitations
 
 **Supported version:** Light Table 0.6.4
