@@ -3,7 +3,8 @@
             [lt.objs.editor.pool :as pool]
             [lt.objs.files :as files]
             [lt.objs.command :as cmd])
-  (:require-macros [lt.macros :refer [defui behavior]]))
+  (:require-macros [lt.macros :refer [defui behavior]]
+                   [lt.plugins.rolex.macros :as rm]))
 
 (defn delayed-mime [name]
   (delay (-> @files/files-obj :types (get name) :mime)))
@@ -14,28 +15,19 @@
 (defn ed->mime [editor]
   (-> @editor :info :mime))
 
-(def cljs-values-over-time
-  '(let [result (do __SELECTION__)
-         id __ID__]
-     (when-not WATCHLOG
-       (def WATCHLOG (atom {})))
-     (swap! WATCHLOG update-in [id] (fnil conj []) result)
-     __|(get @WATCHLOG id "Watch not found")|__
-     result))
-
-(def clj-values-over-time
-  '(let [result (do __SELECTION__)
-         id __ID__]
-     (defonce WATCHLOG (atom {}))
-     (swap! WATCHLOG update-in [id] (fnil conj []) result)
-     __|(get @WATCHLOG id "Watch not found")|__
-     result))
+(rm/defwatch clj-values-over-time
+             (let [result (do __SELECTION__)
+                   id __ID__]
+               (defonce WATCHLOG (atom {}))
+               (swap! WATCHLOG update-in [id] (fnil conj []) result)
+               __|(get @WATCHLOG id "Watch not found")|__
+               result))
 
 (cmd/command {:command :rolex.watch.values-over-time
               :desc "Rolex: Watch selection values over time"
               :exec (fn []
                       (when-let [exp (condp = (ed->mime (pool/last-active))
-                                       @cljs-mime cljs-values-over-time
+                                       @cljs-mime lt.plugins.rolex.cljs/values-over-time
                                        @clj-mime clj-values-over-time
                                        nil)]
                         (cmd/exec! :editor.watch.custom-watch-selection (str exp))))})
