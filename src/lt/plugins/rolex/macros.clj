@@ -13,4 +13,5 @@
   `(def ~sym
      (lt.plugins.rolex.compile/compile '~@body ~(name (ns-name *ns*)))))
 
-(macroexpand-1 '(defn asdf [x] (do x)))
+(comment
+  (macroexpand-1 '(defn asdf [x] (do x))))
