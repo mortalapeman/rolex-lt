@@ -15,6 +15,12 @@
 (defn ed->mime [editor]
   (-> @editor :info :mime))
 
+(rm/defn atom? [x]
+         (instance? Atom x))
+
+(rm/defn ->deref [x]
+         (if (atom? x) (deref x) x))
+
 (rm/defwatch clj-values-over-time
              (let [result (do __SELECTION__)
                    id __ID__]
@@ -22,6 +28,15 @@
                (swap! WATCHLOG update-in [id] (fnil conj []) result)
                __|(get @WATCHLOG id "Watch not found")|__
                result))
+
+
+(def cljs-to-console-as-jsobj
+  '(let [exp (pr-str __SELECTION__)
+         result (do __SELECTION__)]
+     (.log js/console (str "Watch: " exp " =>"))
+     (.log js/console (clj->js result))
+     __|result|__
+     result))
 
 (cmd/command {:command :rolex.watch.values-over-time
               :desc "Rolex: Watch selection values over time"
@@ -31,14 +46,6 @@
                                        @clj-mime clj-values-over-time
                                        nil)]
                         (cmd/exec! :editor.watch.custom-watch-selection (str exp))))})
-
-(def cljs-to-console-as-jsobj
-  '(let [exp (pr-str __SELECTION__)
-         result (do __SELECTION__)]
-     (.log js/console (str "Watch: " exp " =>"))
-     (.log js/console (clj->js result))
-     __|result|__
-     result))
 
 (cmd/command {:command :rolex.watch.to-console-as-js
               :desc "Rolex: Watch selection and log to console as js object"

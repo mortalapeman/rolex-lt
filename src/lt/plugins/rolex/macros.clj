@@ -21,10 +21,3 @@
 (defmacro defwatch [sym & body]
   `(def ~sym
      (lt.plugins.rolex.compiler/inline '~@body ~(name (ns-name *ns*)))))
-
-
-(macroexpand '(lt.plugins.rolex.macros/deff obj-keys #{lt.object/type
-                   :tags
-                   :triggers
-                   :listeners
-                   :behaviors}))

@@ -13,14 +13,8 @@
                     :listeners
                     :behaviors})
 
-(rm/defn atom? [x]
-         (instance? Atom x))
-
-(rm/defn ->deref [x]
-         (if (atom? x) (deref x) x))
-
 (rm/defn ltobj? [x]
-         (let [derefed (->deref v)]
+         (let [derefed (lt.plugins.rolex/->deref x)]
            (boolean
             (and (map? derefed)
                  (:lt.object/id derefed)))))
@@ -28,9 +22,9 @@
 (rm/defn summarize [obj]
          (if (ltobj? obj)
            (let [bins (group-by (comp boolean obj-keys first)
-                                (->deref obj))
+                                (lt.plugins.rolex/->deref obj))
                  wrap (fn [v]
-                        (if (instance? Atom obj)
+                        (if (lt.plugins.rolex/atom? obj)
                           (atom v)
                           v))]
              (-> (into {} (get bins true))
