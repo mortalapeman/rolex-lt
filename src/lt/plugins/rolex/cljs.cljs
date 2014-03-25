@@ -1,4 +1,5 @@
 (ns lt.plugins.rolex.cljs
+  (:require lt.plugins.rolex.compiler)
   (:require-macros [lt.plugins.rolex.macros :as rm]))
 
 (rm/deffn capture-values [id x]
@@ -22,3 +23,14 @@
                    result (do __SELECTION__)]
                __|(console-log exp result)|__
                result))
+
+;; Provided by Beau Fabry
+;; https://github.com/bfabry
+;;
+;; This watch provides a rough estimate of the executtion time of a function.
+;; For more precise measurements a profiler should be used.
+(rm/defwatch convenient-time
+             (let [start (.getTime (js/Date.))
+                   res (do __SELECTION__)]
+               __|(str (- (.getTime (js/Date.)) start) " ms")|__
+               res))

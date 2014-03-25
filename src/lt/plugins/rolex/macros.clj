@@ -19,3 +19,4 @@
 (defmacro defwatch [sym & body]
   `(def ~sym
      (lt.plugins.rolex.compiler/inline '~@body ~(name (ns-name *ns*)))))
+

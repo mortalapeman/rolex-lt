@@ -3,7 +3,8 @@
             [lt.objs.editor.pool :as pool]
             [lt.objs.files :as files]
             [lt.objs.command :as cmd]
-            [lt.plugins.rolex :refer [ed->mime cljs-mime]])
+            [lt.plugins.rolex :refer [ed->mime cljs-mime]]
+            lt.plugins.rolex.compiler)
   (:require-macros [lt.macros :refer [defui behavior]]
                    [lt.plugins.rolex.macros :as rm]))
 
