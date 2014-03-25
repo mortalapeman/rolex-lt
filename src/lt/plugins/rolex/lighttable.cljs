@@ -4,41 +4,47 @@
             [lt.objs.files :as files]
             [lt.objs.command :as cmd]
             [lt.plugins.rolex :refer [ed->mime cljs-mime]])
-  (:require-macros [lt.macros :refer [defui behavior]]))
+  (:require-macros [lt.macros :refer [defui behavior]]
+                   [lt.plugins.rolex.macros :as rm]))
 
-
-(def lt-obj-summary
-  '(let [obj-keys #{:lt.object/type
+(rm/deff obj-keys #{:lt.object/type
                     :tags
                     :triggers
                     :listeners
-                    :behaviors}
-         safe-deref (fn [v]
-                      (if (instance? Atom v)
-                        (deref v)
-                        v))
-         ltobj? (fn [v]
-                  (let [derefed (safe-deref v)]
-                    (boolean
-                     (and (map? derefed)
-                          (:lt.object/id derefed)))))
-         summarize (fn [obj]
-                     (if (ltobj? obj)
-                       (let [bins (group-by (comp boolean obj-keys first)
-                                            (safe-deref obj))
-                             wrap (fn [v]
-                                    (if (instance? Atom obj)
-                                      (atom v)
-                                      v))]
-                         (-> (into {} (get bins true))
-                             (assoc-in [:other-keys] (mapv first (get bins false)))
-                             (wrap)))
-                       obj))
-         result (do __SELECTION__)]
-     __|(if (sequential? result)
-          (mapv summarize result)
-          (summarize result))|__
-     result))
+                    :behaviors})
+
+(rm/defn atom? [x]
+         (instance? Atom x))
+
+(rm/defn ->deref [x]
+         (if (atom? x) (deref x) x))
+
+(rm/defn ltobj? [x]
+         (let [derefed (->deref v)]
+           (boolean
+            (and (map? derefed)
+                 (:lt.object/id derefed)))))
+
+(rm/defn summarize [obj]
+         (if (ltobj? obj)
+           (let [bins (group-by (comp boolean obj-keys first)
+                                (->deref obj))
+                 wrap (fn [v]
+                        (if (instance? Atom obj)
+                          (atom v)
+                          v))]
+             (-> (into {} (get bins true))
+                 (assoc-in [:other-keys] (mapv first (get bins false)))
+                 (wrap)))
+           obj))
+
+(rm/defwatch lt-obj-summary
+             (let [result (do __SELECTION__)
+                   display (if (sequential? result)
+                             (mapv summarize result)
+                             (summarize result))]
+               __|display|__
+               result))
 
 
 (cmd/command {:command :rolex.watch.lt-objs-summary

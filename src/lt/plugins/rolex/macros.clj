@@ -3,15 +3,28 @@
 
 (defmacro defn [sym args & body]
   `(do
-     (swap! lt.plugins.rolex.compile/interns
+     (swap! lt.plugins.rolex.compiler/interns
             assoc
-            (symbol ~(str (ns-name *ns*) "/" (name sym)))
+            (symbol ~(name (ns-name *ns*))  ~(name sym))
             '(~(symbol "fn") ~args ~@body))
      (clojure.core/defn ~sym ~args ~@body)))
 
+(defmacro deff [sym body]
+  (let [source (if (list? body) `'~body body)]
+    `(do
+       (swap! lt.plugins.rolex.compiler/interns
+              assoc
+              (symbol ~(name (ns-name *ns*)) ~(name sym))
+              ~source)
+       (def ~sym ~body))))
+
 (defmacro defwatch [sym & body]
   `(def ~sym
-     (lt.plugins.rolex.compile/compile '~@body ~(name (ns-name *ns*)))))
+     (lt.plugins.rolex.compiler/inline '~@body ~(name (ns-name *ns*)))))
 
-(comment
-  (macroexpand-1 '(defn asdf [x] (do x))))
+
+(macroexpand '(lt.plugins.rolex.macros/deff obj-keys #{lt.object/type
+                   :tags
+                   :triggers
+                   :listeners
+                   :behaviors}))
