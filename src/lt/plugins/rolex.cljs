@@ -6,44 +6,28 @@
   (:require-macros [lt.macros :refer [defui behavior]]
                    [lt.plugins.rolex.macros :as rm]))
 
-(defn delayed-mime [name]
-  (delay (-> @files/files-obj :types (get name) :mime)))
-
-(def cljs-mime (delayed-mime "ClojureScript"))
-(def clj-mime (delayed-mime "Clojure"))
-
-(defn ed->mime [editor]
-  (-> @editor :info :mime))
-
 (rm/defn atom? [x]
          (instance? Atom x))
 
 (rm/defn ->deref [x]
          (if (atom? x) (deref x) x))
 
-(rm/defwatch clj-values-over-time
-             (let [result (do __SELECTION__)
-                   id __ID__]
-               (defonce WATCHLOG (atom {}))
-               (swap! WATCHLOG update-in [id] (fnil conj []) result)
-               __|(get @WATCHLOG id "Watch not found")|__
-               result))
+(defn delayed-mime [name]
+  (delay (-> @files/files-obj :types (get name) :mime)))
 
+(defn ed->mime [editor]
+  (-> @editor :info :mime))
 
-(def cljs-to-console-as-jsobj
-  '(let [exp (pr-str __SELECTION__)
-         result (do __SELECTION__)]
-     (.log js/console (str "Watch: " exp " =>"))
-     (.log js/console (clj->js result))
-     __|result|__
-     result))
+(def cljs-mime (delayed-mime "ClojureScript"))
+(def clj-mime (delayed-mime "Clojure"))
+
 
 (cmd/command {:command :rolex.watch.values-over-time
               :desc "Rolex: Watch selection values over time"
               :exec (fn []
                       (when-let [exp (condp = (ed->mime (pool/last-active))
                                        @cljs-mime lt.plugins.rolex.cljs/values-over-time
-                                       @clj-mime clj-values-over-time
+                                       @clj-mime  lt.plugins.rolex.clj/values-over-time
                                        nil)]
                         (cmd/exec! :editor.watch.custom-watch-selection (str exp))))})
 
@@ -51,6 +35,6 @@
               :desc "Rolex: Watch selection and log to console as js object"
               :exec (fn []
                       (when-let [exp (condp = (ed->mime (pool/last-active))
-                                       @cljs-mime cljs-to-console-as-jsobj
+                                       @cljs-mime lt.plugins.rolex.cljs/to-console-as-jsobj
                                        nil)]
                         (cmd/exec! :editor.watch.custom-watch-selection (str exp))))})

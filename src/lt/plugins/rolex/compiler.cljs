@@ -1,13 +1,12 @@
 (ns lt.plugins.rolex.compiler
-  (:require [clojure.walk :refer [postwalk]])
-  (:require-macros [lt.plugins.rolex.macros :as rm]))
+  (:require [clojure.walk :refer [postwalk]]))
 
 (def interns (atom {}))
 
 (defn inline [form current-ns]
   (letfn [(transform [x]
                      (if-let [s (or (get @interns x)
-                                    (when (implements? INamed x)
+                                    (when (implements? INamed x) ;; Experimental: implements?
                                       (get @interns
                                            (symbol current-ns
                                                    (name x)))))]
