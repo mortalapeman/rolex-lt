@@ -13,13 +13,13 @@
                     :listeners
                     :behaviors})
 
-(rm/defn ltobj? [x]
+(rm/deffn ltobj? [x]
          (let [derefed (lt.plugins.rolex/->deref x)]
            (boolean
             (and (map? derefed)
                  (:lt.object/id derefed)))))
 
-(rm/defn summarize [obj]
+(rm/deffn summarize [obj]
          (if (ltobj? obj)
            (let [bins (group-by (comp boolean obj-keys first)
                                 (lt.plugins.rolex/->deref obj))

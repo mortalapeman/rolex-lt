@@ -1,22 +1,20 @@
-(ns lt.plugins.rolex.macros
-  (:refer-clojure :exclude [defn]))
+(ns lt.plugins.rolex.macros)
 
-(defmacro defn [sym args & body]
+(defmacro deffn [sym args & body]
   `(do
      (swap! lt.plugins.rolex.compiler/interns
             assoc
             (symbol ~(name (ns-name *ns*))  ~(name sym))
             '(~(symbol "fn") ~args ~@body))
-     (clojure.core/defn ~sym ~args ~@body)))
+     (defn ~sym ~args ~@body)))
 
-(defmacro deff [sym body]
-  (let [source (if (list? body) `'~body body)]
-    `(do
-       (swap! lt.plugins.rolex.compiler/interns
-              assoc
-              (symbol ~(name (ns-name *ns*)) ~(name sym))
-              ~source)
-       (def ~sym ~body))))
+(defmacro deff [sym form]
+  `(let [result# ~form]
+     (swap! lt.plugins.rolex.compiler/interns
+            assoc
+            (symbol ~(name (ns-name *ns*)) ~(name sym))
+            result#)
+     (def ~sym result#)))
 
 (defmacro defwatch [sym & body]
   `(def ~sym

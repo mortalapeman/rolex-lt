@@ -6,10 +6,10 @@
   (:require-macros [lt.macros :refer [defui behavior]]
                    [lt.plugins.rolex.macros :as rm]))
 
-(rm/defn atom? [x]
+(rm/deffn atom? [x]
          (instance? Atom x))
 
-(rm/defn ->deref [x]
+(rm/deffn ->deref [x]
          (if (atom? x) (deref x) x))
 
 (defn delayed-mime [name]

@@ -1,7 +1,7 @@
 (ns lt.plugins.rolex.compiler
   (:require [clojure.walk :refer [postwalk]]))
 
-(def interns (atom {}))
+(def interns (atom {'clojure.core/deref 'deref}))
 
 (defn inline [form current-ns]
   (letfn [(transform [x]
