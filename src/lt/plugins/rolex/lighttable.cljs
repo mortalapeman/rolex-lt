@@ -42,7 +42,6 @@
                __|display|__
                result))
 
-
 (cmd/command {:command :rolex.watch.lt-objs-summary
               :desc "Rolex: Watch selection and summarize LT objects"
               :exec (fn []

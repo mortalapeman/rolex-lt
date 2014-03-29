@@ -5,7 +5,7 @@
      (swap! lt.plugins.rolex.compiler/interns
             assoc
             (symbol ~(name (ns-name *ns*))  ~(name sym))
-            '(~(symbol "fn") ~args ~@body))
+            '(~(symbol "fn") ~(gensym (name sym)) ~args ~@(filter list? body)))
      (defn ~sym ~args ~@body)))
 
 (defmacro deff [sym form]
@@ -19,4 +19,3 @@
 (defmacro defwatch [sym & body]
   `(def ~sym
      (lt.plugins.rolex.compiler/inline '~@body ~(name (ns-name *ns*)))))
-
