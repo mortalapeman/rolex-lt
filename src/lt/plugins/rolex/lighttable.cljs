@@ -3,7 +3,7 @@
             [lt.objs.editor.pool :as pool]
             [lt.objs.files :as files]
             [lt.objs.command :as cmd]
-            [lt.plugins.rolex :refer [ed->mime cljs-mime]]
+            [lt.plugins.rolex.core :refer [ed->mime cljs-mime]]
             lt.plugins.rolex.compiler)
   (:require-macros [lt.macros :refer [defui behavior]]
                    [lt.plugins.rolex.macros :as rm]))
@@ -15,23 +15,24 @@
                     :behaviors})
 
 (rm/deffn ltobj? [x]
-         (let [derefed (lt.plugins.rolex/->deref x)]
-           (boolean
-            (and (map? derefed)
-                 (:lt.object/id derefed)))))
+          (let [derefed (lt.plugins.rolex.core/->deref x)]
+            (boolean
+             (and (map? derefed)
+                  (:lt.object/id derefed)))))
 
 (rm/deffn summarize [obj]
-         (if (ltobj? obj)
-           (let [bins (group-by (comp boolean obj-keys first)
-                                (lt.plugins.rolex/->deref obj))
-                 wrap (fn [v]
-                        (if (lt.plugins.rolex/atom? obj)
-                          (atom v)
-                          v))]
-             (-> (into {} (get bins true))
-                 (assoc-in [:other-keys] (mapv first (get bins false)))
-                 (wrap)))
-           obj))
+          (if (ltobj? obj)
+            (let [bins (group-by (comp boolean obj-keys first)
+                                 (lt.plugins.rolex.core/->deref obj))
+                  wrap (fn [v]
+                         (if (lt.plugins.rolex.core/atom? obj)
+                           (atom v)
+                           v))]
+              (-> (into {} (get bins true))
+                  (assoc-in [:other-keys] (mapv first (get bins false)))
+                  (wrap)))
+            obj))
+
 
 (rm/defwatch lt-obj-summary
              (let [result (do __SELECTION__)
