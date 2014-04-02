@@ -2,6 +2,12 @@
   (:require lt.plugins.rolex.compiler)
   (:require-macros [lt.plugins.rolex.macros :as rm]))
 
+(rm/deffn atom? [x]
+          (when x
+            (instance? Atom x)))
+
+(rm/deffn ->deref [x]
+         (if (atom? x) (deref x) x))
 
 (rm/deffn capture [x]
           (if (atom? x)
