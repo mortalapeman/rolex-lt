@@ -2,6 +2,17 @@
   (:require lt.plugins.rolex.compiler)
   (:require-macros [lt.plugins.rolex.macros :as rm]))
 
+(rm/deffn atom? [x]
+         (instance? Atom x))
+
+(rm/deffn ->deref [x]
+         (if (atom? x) (deref x) x))
+
+(rm/deffn capture [x]
+          (if (atom? x)
+            (atom @x)
+            x))
+
 (rm/deffn capture-values [id x]
          (when-not WATCHLOG
            (def WATCHLOG (atom {})))
@@ -33,4 +44,12 @@
              (let [start (.getTime (js/Date.))
                    res (do __SELECTION__)]
                __|(str (- (.getTime (js/Date.)) start) " ms")|__
+               res))
+
+(rm/defwatch named-capture
+             (let [res (do __SELECTION__)]
+               (when-not __CAPTURENAME__
+                 (def __CAPTURENAME__ (atom (capture res))))
+               (reset! __CAPTURENAME__ res)
+               __|(str "__CAPTURENAME__: " (pr-str res))|__
                res))

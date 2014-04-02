@@ -15,7 +15,7 @@
                     :behaviors})
 
 (rm/deffn ltobj? [x]
-          (let [derefed (lt.plugins.rolex.core/->deref x)]
+          (let [derefed (lt.plugins.rolex.cljs/->deref x)]
             (boolean
              (and (map? derefed)
                   (:lt.object/id derefed)))))
@@ -23,9 +23,9 @@
 (rm/deffn summarize [obj]
           (if (ltobj? obj)
             (let [bins (group-by (comp boolean obj-keys first)
-                                 (lt.plugins.rolex.core/->deref obj))
+                                 (lt.plugins.rolex.cljs/->deref obj))
                   wrap (fn [v]
-                         (if (lt.plugins.rolex.core/atom? obj)
+                         (if (lt.plugins.rolex.cljs/atom? obj)
                            (atom v)
                            v))]
               (-> (into {} (get bins true))
