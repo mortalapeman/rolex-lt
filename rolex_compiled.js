@@ -94,22 +94,36 @@ goog.require('cljs.core');
 goog.require('clojure.walk');
 goog.require('clojure.walk');
 lt.plugins.rolex.compiler.interns = cljs.core.atom.call(null,new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Symbol("clojure.core","deref","clojure.core/deref",-564909588,null),new cljs.core.Symbol(null,"deref","deref",-1545057749,null)], null));
+lt.plugins.rolex.compiler.aliases = cljs.core.atom.call(null,cljs.core.PersistentArrayMap.EMPTY);
+lt.plugins.rolex.compiler.alias = (function alias(alias__$1,namespace_sym){cljs.core.swap_BANG_.call(null,lt.plugins.rolex.compiler.aliases,cljs.core.assoc,[cljs.core.str(alias__$1)].join(''),[cljs.core.str(namespace_sym)].join(''));
+return null;
+});
+lt.plugins.rolex.compiler.__GT_alias = (function __GT_alias(sym){if((sym instanceof cljs.core.Symbol))
+{return cljs.core.get.call(null,cljs.core.deref.call(null,lt.plugins.rolex.compiler.aliases),cljs.core.namespace.call(null,sym));
+} else
+{return null;
+}
+});
+lt.plugins.rolex.compiler.resolve_alias = (function resolve_alias(sym){var temp__4092__auto__ = lt.plugins.rolex.compiler.__GT_alias.call(null,sym);if(cljs.core.truth_(temp__4092__auto__))
+{var ns = temp__4092__auto__;return cljs.core.get.call(null,cljs.core.deref.call(null,lt.plugins.rolex.compiler.interns),cljs.core.symbol.call(null,ns,cljs.core.name.call(null,sym)));
+} else
+{return null;
+}
+});
+lt.plugins.rolex.compiler.resolve_with_current_ns = (function resolve_with_current_ns(sym,ns){if((sym instanceof cljs.core.Symbol))
+{return cljs.core.get.call(null,cljs.core.deref.call(null,lt.plugins.rolex.compiler.interns),cljs.core.symbol.call(null,ns,cljs.core.name.call(null,sym)));
+} else
+{return null;
+}
+});
+cljs.core.deref.call(null,lt.plugins.rolex.compiler.interns);
 lt.plugins.rolex.compiler.inline = (function inline(form,current_ns){var transform = (function transform(x){var temp__4090__auto__ = (function (){var or__6816__auto__ = cljs.core.get.call(null,cljs.core.deref.call(null,lt.plugins.rolex.compiler.interns),x);if(cljs.core.truth_(or__6816__auto__))
 {return or__6816__auto__;
 } else
-{if((function (){var G__8446 = x;if(G__8446)
-{var bit__7459__auto__ = (G__8446.cljs$lang$protocol_mask$partition1$ & 4096);if((bit__7459__auto__) || (G__8446.cljs$core$INamed$))
-{return true;
+{var or__6816__auto____$1 = lt.plugins.rolex.compiler.resolve_alias.call(null,x);if(cljs.core.truth_(or__6816__auto____$1))
+{return or__6816__auto____$1;
 } else
-{return false;
-}
-} else
-{return false;
-}
-})())
-{return cljs.core.get.call(null,cljs.core.deref.call(null,lt.plugins.rolex.compiler.interns),cljs.core.symbol.call(null,current_ns,cljs.core.name.call(null,x)));
-} else
-{return null;
+{return lt.plugins.rolex.compiler.resolve_with_current_ns.call(null,x,current_ns);
 }
 }
 })();if(cljs.core.truth_(temp__4090__auto__))
@@ -192,10 +206,13 @@ goog.require('lt.object');
 goog.require('lt.object');
 goog.require('lt.objs.editor.pool');
 goog.require('lt.objs.command');
+goog.require('lt.plugins.rolex.compiler');
 goog.require('lt.plugins.rolex.cljs');
-var result__8706__auto___8732 = new cljs.core.PersistentHashSet(null, new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"behaviors","behaviors",607554515),null,new cljs.core.Keyword("lt.object","type","lt.object/type",701613666),null,new cljs.core.Keyword(null,"listeners","listeners",4090152369),null,new cljs.core.Keyword(null,"triggers","triggers",2516997421),null,new cljs.core.Keyword(null,"tags","tags",1017456523),null], null), null);cljs.core.swap_BANG_.call(null,lt.plugins.rolex.compiler.interns,cljs.core.assoc,cljs.core.symbol.call(null,"lt.plugins.rolex.lighttable","obj-keys"),result__8706__auto___8732);
-lt.plugins.rolex.lighttable.obj_keys = result__8706__auto___8732;
-lt.plugins.rolex.lighttable.ltobj_QMARK_ = (function ltobj_QMARK_(x){var temp__4092__auto__ = lt.plugins.rolex.cljs.__GT_deref.call(null,x);if(cljs.core.truth_(temp__4092__auto__))
+var result__8957__auto___8994 = new cljs.core.PersistentHashSet(null, new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"behaviors","behaviors",607554515),null,new cljs.core.Keyword("lt.object","type","lt.object/type",701613666),null,new cljs.core.Keyword(null,"listeners","listeners",4090152369),null,new cljs.core.Keyword(null,"triggers","triggers",2516997421),null,new cljs.core.Keyword(null,"tags","tags",1017456523),null], null), null);cljs.core.swap_BANG_.call(null,lt.plugins.rolex.compiler.interns,cljs.core.assoc,cljs.core.symbol.call(null,"lt.plugins.rolex.lighttable","obj-keys"),result__8957__auto___8994);
+lt.plugins.rolex.lighttable.obj_keys = result__8957__auto___8994;
+lt.plugins.rolex.compiler.alias.call(null,new cljs.core.Symbol(null,"cljs","cljs",-1637475029,null),new cljs.core.Symbol(null,"lt.plugins.rolex.cljs","lt.plugins.rolex.cljs",150706699,null));
+cljs.core.swap_BANG_.call(null,lt.plugins.rolex.compiler.interns,cljs.core.assoc,cljs.core.symbol.call(null,"lt.plugins.rolex.lighttable","ltobj?"),lt.plugins.rolex.compiler.inline.call(null,cljs.core.list(new cljs.core.Symbol(null,"fn","fn",-1640528255,null),new cljs.core.Symbol(null,"ltobj?8989","ltobj?8989",-546410709,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"x","x",-1640531407,null)], null),cljs.core.list(new cljs.core.Symbol(null,"when-let","when-let",401149633,null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"derefed","derefed",-84540854,null),cljs.core.list(new cljs.core.Symbol("cljs","->deref","cljs/->deref",1708069636,null),new cljs.core.Symbol(null,"x","x",-1640531407,null))], null),cljs.core.list(new cljs.core.Symbol(null,"boolean","boolean",-1575819807,null),cljs.core.list(new cljs.core.Symbol(null,"and","and",-1640434800,null),cljs.core.list(new cljs.core.Symbol(null,"map?","map?",-1637187556,null),new cljs.core.Symbol(null,"derefed","derefed",-84540854,null)),cljs.core.list(new cljs.core.Keyword("lt.object","id","lt.object/id",706431105),new cljs.core.Symbol(null,"derefed","derefed",-84540854,null)))))),"lt.plugins.rolex.lighttable"));
+lt.plugins.rolex.lighttable.ltobj_QMARK_ = (function ltobj_QMARK_(x){var temp__4092__auto__ = cljs.__GT_deref.call(null,x);if(cljs.core.truth_(temp__4092__auto__))
 {var derefed = temp__4092__auto__;return cljs.core.boolean$.call(null,(function (){var and__6804__auto__ = cljs.core.map_QMARK_.call(null,derefed);if(and__6804__auto__)
 {return new cljs.core.Keyword("lt.object","id","lt.object/id",706431105).cljs$core$IFn$_invoke$arity$1(derefed);
 } else
@@ -206,9 +223,10 @@ lt.plugins.rolex.lighttable.ltobj_QMARK_ = (function ltobj_QMARK_(x){var temp__4
 {return null;
 }
 });
+cljs.core.swap_BANG_.call(null,lt.plugins.rolex.compiler.interns,cljs.core.assoc,cljs.core.symbol.call(null,"lt.plugins.rolex.lighttable","summarize"),lt.plugins.rolex.compiler.inline.call(null,cljs.core.list(new cljs.core.Symbol(null,"fn","fn",-1640528255,null),new cljs.core.Symbol(null,"summarize8990","summarize8990",-1469813678,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"obj","obj",-1640421712,null)], null),cljs.core.list(new cljs.core.Symbol(null,"if","if",-1640528170,null),cljs.core.list(new cljs.core.Symbol(null,"ltobj?","ltobj?",1561949545,null),new cljs.core.Symbol(null,"obj","obj",-1640421712,null)),cljs.core.list(new cljs.core.Symbol(null,"let","let",-1640424492,null),new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"bins","bins",-1637507579,null),cljs.core.list(new cljs.core.Symbol(null,"group-by","group-by",-1134218210,null),cljs.core.list(new cljs.core.Symbol(null,"comp","comp",-1637472056,null),new cljs.core.Symbol(null,"boolean","boolean",-1575819807,null),new cljs.core.Symbol(null,"obj-keys","obj-keys",-1601528125,null),new cljs.core.Symbol(null,"first","first",-1543091095,null)),cljs.core.list(new cljs.core.Symbol("cljs","->deref","cljs/->deref",1708069636,null),new cljs.core.Symbol(null,"obj","obj",-1640421712,null))),new cljs.core.Symbol(null,"wrap","wrap",-1636873725,null),cljs.core.list(new cljs.core.Symbol(null,"fn","fn",-1640528255,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"v","v",-1640531409,null)], null),cljs.core.list(new cljs.core.Symbol(null,"if","if",-1640528170,null),cljs.core.list(new cljs.core.Symbol("cljs","atom?","cljs/atom?",-1353190575,null),new cljs.core.Symbol(null,"obj","obj",-1640421712,null)),cljs.core.list(new cljs.core.Symbol(null,"atom","atom",-1637526774,null),new cljs.core.Symbol(null,"v","v",-1640531409,null)),new cljs.core.Symbol(null,"v","v",-1640531409,null)))], null),cljs.core.list(new cljs.core.Symbol(null,"->","->",-1640530070,null),cljs.core.list(new cljs.core.Symbol(null,"into","into",-1637294055,null),cljs.core.PersistentArrayMap.EMPTY,cljs.core.list(new cljs.core.Symbol(null,"get","get",-1640429297,null),new cljs.core.Symbol(null,"bins","bins",-1637507579,null),true)),cljs.core.list(new cljs.core.Symbol(null,"assoc-in","assoc-in",-2005053546,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"other-keys","other-keys",785231363)], null),cljs.core.list(new cljs.core.Symbol(null,"mapv","mapv",-1637187501,null),new cljs.core.Symbol(null,"first","first",-1543091095,null),cljs.core.list(new cljs.core.Symbol(null,"get","get",-1640429297,null),new cljs.core.Symbol(null,"bins","bins",-1637507579,null),false))),cljs.core.list(new cljs.core.Symbol(null,"wrap","wrap",-1636873725,null)))),new cljs.core.Symbol(null,"obj","obj",-1640421712,null))),"lt.plugins.rolex.lighttable"));
 lt.plugins.rolex.lighttable.summarize = (function summarize(obj){if(cljs.core.truth_(lt.plugins.rolex.lighttable.ltobj_QMARK_.call(null,obj)))
-{var bins = cljs.core.group_by.call(null,cljs.core.comp.call(null,cljs.core.boolean$,lt.plugins.rolex.lighttable.obj_keys,cljs.core.first),lt.plugins.rolex.cljs.__GT_deref.call(null,obj));var wrap = ((function (bins){
-return (function (v){if(cljs.core.truth_(lt.plugins.rolex.cljs.atom_QMARK_.call(null,obj)))
+{var bins = cljs.core.group_by.call(null,cljs.core.comp.call(null,cljs.core.boolean$,lt.plugins.rolex.lighttable.obj_keys,cljs.core.first),cljs.__GT_deref.call(null,obj));var wrap = ((function (bins){
+return (function (v){if(cljs.core.truth_(cljs.atom_QMARK_.call(null,obj)))
 {return cljs.core.atom.call(null,v);
 } else
 {return v;
@@ -220,7 +238,7 @@ return (function (v){if(cljs.core.truth_(lt.plugins.rolex.cljs.atom_QMARK_.call(
 }
 });
 lt.plugins.rolex.lighttable.lt_obj_summary = lt.plugins.rolex.compiler.inline.call(null,cljs.core.list(new cljs.core.Symbol(null,"let","let",-1640424492,null),new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"result","result",1720009174,null),cljs.core.list(new cljs.core.Symbol(null,"do","do",-1640528316,null),new cljs.core.Symbol(null,"__SELECTION__","__SELECTION__",-1988549595,null)),new cljs.core.Symbol(null,"display","display",31232635,null),cljs.core.list(new cljs.core.Symbol(null,"if","if",-1640528170,null),cljs.core.list(new cljs.core.Symbol(null,"sequential?","sequential?",1865038041,null),new cljs.core.Symbol(null,"result","result",1720009174,null)),cljs.core.list(new cljs.core.Symbol(null,"mapv","mapv",-1637187501,null),new cljs.core.Symbol(null,"summarize","summarize",-126704902,null),new cljs.core.Symbol(null,"result","result",1720009174,null)),cljs.core.list(new cljs.core.Symbol(null,"summarize","summarize",-126704902,null),new cljs.core.Symbol(null,"result","result",1720009174,null)))], null),new cljs.core.Symbol(null,"__|display|__","__|display|__",-469250897,null),new cljs.core.Symbol(null,"result","result",1720009174,null)),"lt.plugins.rolex.lighttable");
-lt.objs.command.command.call(null,new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"command","command",1964298941),new cljs.core.Keyword(null,"rolex.watch.lt-objs-summary","rolex.watch.lt-objs-summary",4009330561),new cljs.core.Keyword(null,"desc","desc",1016984067),"Rolex: Watch selection and summarize LT objects",new cljs.core.Keyword(null,"exec","exec",1017031683),(function (){var temp__4092__auto__ = (function (){var pred__8729 = cljs.core._EQ_;var expr__8730 = lt.plugins.rolex.core.ed__GT_mime.call(null,lt.objs.editor.pool.last_active.call(null));if(cljs.core.truth_(pred__8729.call(null,cljs.core.deref.call(null,lt.plugins.rolex.core.cljs_mime),expr__8730)))
+lt.objs.command.command.call(null,new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"command","command",1964298941),new cljs.core.Keyword(null,"rolex.watch.lt-objs-summary","rolex.watch.lt-objs-summary",4009330561),new cljs.core.Keyword(null,"desc","desc",1016984067),"Rolex: Watch selection and summarize LT objects",new cljs.core.Keyword(null,"exec","exec",1017031683),(function (){var temp__4092__auto__ = (function (){var pred__8991 = cljs.core._EQ_;var expr__8992 = lt.plugins.rolex.core.ed__GT_mime.call(null,lt.objs.editor.pool.last_active.call(null));if(cljs.core.truth_(pred__8991.call(null,cljs.core.deref.call(null,lt.plugins.rolex.core.cljs_mime),expr__8992)))
 {return lt.plugins.rolex.lighttable.lt_obj_summary;
 } else
 {return null;

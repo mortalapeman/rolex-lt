@@ -4,12 +4,13 @@
   (let [nsname (name (ns-name *ns*))
         symname (name sym)
         fnsym 'fn]
-    `(swap! lt.plugins.rolex.compiler/interns
-           assoc
-           (symbol ~nsname ~symname)
-           (lt.plugins.rolex.compiler/inline '(~fnsym ~(gensym symname) ~args ~@(filter list? body))
-                                             ~nsname))
-    `(defn ~sym ~args ~@body)))
+    `(do
+       (swap! lt.plugins.rolex.compiler/interns
+              assoc
+              (symbol ~nsname ~symname)
+              (lt.plugins.rolex.compiler/inline '(~fnsym ~(gensym symname) ~args ~@(filter list? body))
+                                                ~nsname))
+       (defn ~sym ~args ~@body))))
 
 (defmacro deff [sym form]
   `(let [result# ~form]
