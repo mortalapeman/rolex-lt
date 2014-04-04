@@ -1,4 +1,5 @@
-(ns lt.plugins.rolex.macros)
+(ns lt.plugins.rolex.macros
+  (:refer-clojure :exclude [alias]))
 
 (defmacro deffn [sym args & body]
   (let [nsname (name (ns-name *ns*))
@@ -19,6 +20,12 @@
             (symbol ~(name (ns-name *ns*)) ~(name sym))
             result#)
      (def ~sym result#)))
+
+(defmacro alias [a namespace-sym]
+  `(swap! lt.plugins.rolex.compiler/aliases
+          assoc
+          '~(ns-name *ns*)
+          {~a ~namespace-sym}))
 
 (defmacro defwatch [sym & body]
   `(def ~sym

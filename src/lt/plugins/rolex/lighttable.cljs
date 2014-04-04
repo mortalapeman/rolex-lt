@@ -4,8 +4,8 @@
             [lt.objs.files :as files]
             [lt.objs.command :as cmd]
             [lt.plugins.rolex.core :refer [ed->mime cljs-mime]]
-            [lt.plugins.rolex.compiler :as compiler]
-            lt.plugins.rolex.cljs)
+            lt.plugins.rolex.compiler
+            [lt.plugins.rolex.cljs :as cljs])
   (:require-macros [lt.macros :refer [defui behavior]]
                    [lt.plugins.rolex.macros :as rm]))
 
@@ -15,7 +15,7 @@
                     :listeners
                     :behaviors})
 
-(compiler/alias 'cljs 'lt.plugins.rolex.cljs)
+(rm/alias 'cljs 'lt.plugins.rolex.cljs)
 
 (rm/deffn ltobj? [x]
           (when-let [derefed (cljs/->deref x)]
@@ -44,6 +44,7 @@
                              (summarize result))]
                __|display|__
                result))
+
 
 (cmd/command {:command :rolex.watch.lt-objs-summary
               :desc "Rolex: Watch selection and summarize LT objects"
