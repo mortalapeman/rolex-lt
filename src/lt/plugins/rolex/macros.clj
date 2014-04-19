@@ -1,4 +1,5 @@
 (ns lt.plugins.rolex.macros
+  (:require [lt.macros :refer [behavior]])
   (:refer-clojure :exclude [alias]))
 
 (defmacro deffn [sym args & body]
@@ -30,3 +31,13 @@
 (defmacro defwatch [sym & body]
   `(def ~sym
      (lt.plugins.rolex.compiler/inline '~@body ~(name (ns-name *ns*)))))
+
+
+(defmacro lense [keyname sym]
+  `(behavior ~keyname
+          :triggers #{:lense+}
+          :reaction (fn [this# lenses#]
+                      (assoc lenses#
+                             ~(keyword (str sym))
+                             (get @lt.plugins.rolex.compiler/interns '~sym)))))
+

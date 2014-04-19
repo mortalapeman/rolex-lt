@@ -54,18 +54,33 @@
        (dom/$ :input)
        (dom/val)))
 
+(defn focus-on-input [obj]
+  (->> (object/->content obj)
+       (dom/$ :input)
+       (dom/focus)))
+
+(defn listen-for-enter [this obj form]
+  (dom/on (object/->content obj)
+          :keyup
+          (fn [e]
+            (when (= 13 (.-which e))
+              (object/raise this :named-capture.end form (popup-val))))))
+
 (defn sub-capture-name [form name]
   (string/replace (str form) "__CAPTURENAME__" name))
 
 (behavior ::named-capture.begin
           :triggers #{:named-capture.begin}
           :reaction (fn [this form]
-                      (popup/popup! {:header "Symbol"
-                                     :body [:input {:type "text"}]
-                                     :buttons [{:label "OK"
-                                                :action (fn []
-                                                          (object/raise this :named-capture.end form (popup-val)))}
-                                               popup/cancel-button]})))
+                      (let [popup-content {:header "Symbol"
+                                           :body [:input {:type "text"}]
+                                           :buttons [{:label "OK"
+                                                      :action (fn []
+                                                                (object/raise this :named-capture.end form (popup-val)))}
+                                                     popup/cancel-button]}
+                            inst (popup/popup! popup-content)]
+                        (focus-on-input inst)
+                        (listen-for-enter this inst form))))
 
 (behavior ::named-capture.end
           :triggers #{:named-capture.end}
