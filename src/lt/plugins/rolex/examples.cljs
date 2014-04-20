@@ -2,7 +2,7 @@
   (:require [lt.plugins.rolex.core :as core]
             [lt.plugins.rolex.compiler :as compiler]
             [lt.plugins.rolex.cljs :as cljs :refer [atom?]])
-  (:require-macros [lt.plugins.rolex.macros :refer [lense deffn deff alias defwatch]]))
+  (:require-macros [lt.plugins.rolex.macros :refer [lens deffn deff alias defwatch]]))
 
 ;; you'll need to remove this comment block and the closing paren
 (comment
@@ -76,11 +76,11 @@ alias-example
 
 ;; TODO: Lenses
 ;;
-;; Lenses are a function with one arg that transforms a value and then passes it
-;; on to the next lense. They can be composed with the :rolex.watch.with-lenses
+;; A lens is a function with one arg that transforms a value and then passes it
+;; on to the next lens. They can be composed with the :rolex.watch.with-lenses
 ;; command.
 ;;
-;; The lense macro is a wrapper around the behavior macro to make defining them
+;; The lens macro is a wrapper around the behavior macro to make defining them
 ;; a little easier.
 ;;
 ;; Ex: Keymap binding to combine ltobject summarization and values over time
