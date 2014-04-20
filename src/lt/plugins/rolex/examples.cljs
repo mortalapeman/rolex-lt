@@ -4,6 +4,7 @@
             [lt.plugins.rolex.cljs :as cljs :refer [atom?]])
   (:require-macros [lt.plugins.rolex.macros :refer [lense deffn deff alias defwatch]]))
 
+;; you'll need to remove this comment block and the closing paren
 (comment
 
 ;; Helper function for later examples
