@@ -1,6 +1,6 @@
 {:+ {:app [(:lt.objs.plugins/load-js "rolex_compiled.js")]
 ;;      :editor [:lt.plugins.rolex/named-capture.begin
 ;;               :lt.plugins.rolex/named-capture.end]
-     :watch-lense [:lt.plugins.rolex/lense.values-over-time
-                   :lt.plugins.rolex/lense.summarize-lt-objs
-                   :lt.plugins.rolex/lense.to-console-as-jsobj]}}
+     :watch-lens [:lt.plugins.rolex/lens.values-over-time
+                  :lt.plugins.rolex/lens.summarize-lt-objs
+                  :lt.plugins.rolex/lens.to-console-as-jsobj]}}

@@ -12,7 +12,7 @@
             [lt.plugins.rolex.lighttable :as lighttable]
             [lt.plugins.rolex.clj :as clj])
   (:require-macros [lt.macros :refer [defui behavior]]
-                   [lt.plugins.rolex.macros :as rm :refer [lense]]))
+                   [lt.plugins.rolex.macros :as rm :refer [lens]]))
 
 
 (cmd/command {:command :rolex.watch.values-over-time
@@ -97,38 +97,38 @@
 ;; Lenses
 ;;****************************************************
 
-(lense ::lense.summarize-lt-objs
-       :cljs lt.plugins.rolex.lighttable/->summarize
-       :alias :->ltsummarize
-       :desc "Summarizes light table object maps and lets other values passthrough")
+(lens ::lens.summarize-lt-objs
+      :cljs lt.plugins.rolex.lighttable/->summarize
+      :alias :->ltsummarize
+      :desc "Summarizes light table object maps and lets other values passthrough")
 
 
-(lense ::lense.values-over-time
-       :cljs lt.plugins.rolex.cljs/->values-over-time
-       :clj  lt.plugins.rolex.clj/->values-over-time
-       :alias :->values-over-time
-       :desc "Captures the sequence of values as they pass through the watch")
+(lens ::lens.values-over-time
+      :cljs lt.plugins.rolex.cljs/->values-over-time
+      :clj  lt.plugins.rolex.clj/->values-over-time
+      :alias :->values-over-time
+      :desc "Captures the sequence of values as they pass through the watch")
 
-(lense ::lense.to-console-as-jsobj
-       :cljs lt.plugins.rolex.cljs/->console-log
-       :alias :->console-log
-       :desc "Pass values throught clj->js and log values to the console. Includes
-       a preceding line that prints the expression the value came from.")
+(lens ::lens.to-console-as-jsobj
+      :cljs lt.plugins.rolex.cljs/->console-log
+      :alias :->console-log
+      :desc "Pass values throught clj->js and log values to the console. Includes
+      a preceding line that prints the expression the value came from.")
 
 (object/object* ::watch-lenses
-                :tags #{:watch-lense}
+                :tags #{:watch-lens}
                 :init (fn [this] nil))
 
 (def lenses (object/create ::watch-lenses))
 
-(rm/defwatch lense-watch
+(rm/defwatch lens-watch
              (let [result (do __SELECTION__)
                    display ((comp __LENSES__) result)]
                __|display|__
                result))
 
 (defn substitue-lenses [fns]
-  (string/replace (str lense-watch)
+  (string/replace (str lens-watch)
                   "__LENSES__"
                   (apply str (interpose " " (reverse fns)))))
 
@@ -137,7 +137,7 @@
               :hidden true
               :exec (fn [& ks]
                       (when-not (empty? ks)
-                        (let [all (object/raise-reduce lenses :lense+ {})
+                        (let [all (object/raise-reduce lenses :lens+ {})
                               fns (filter (comp not nil?) (for [k ks] (get all k)))]
                           (when (seq fns)
                             (cmd/exec! :editor.watch.custom-watch-selection
