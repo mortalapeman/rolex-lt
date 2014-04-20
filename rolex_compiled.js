@@ -504,18 +504,6 @@ goog.require('lt.plugins.rolex.compiler');
 goog.require('lt.plugins.rolex.compiler');
 goog.require('lt.plugins.rolex.core');
 goog.require('lt.plugins.rolex.core');
-lt.plugins.rolex.examples.inline = (function inline(form){return lt.plugins.rolex.compiler.inline.call(null,form,"lt.plugins.rolex.examples");
-});
-var result__8293__auto___8486 = 42;cljs.core.swap_BANG_.call(null,lt.plugins.rolex.compiler.interns,cljs.core.assoc,cljs.core.symbol.call(null,"lt.plugins.rolex.examples","the-answer"),result__8293__auto___8486);
-lt.plugins.rolex.examples.the_answer = result__8293__auto___8486;
-lt.plugins.rolex.examples.inline.call(null,cljs.core.list(new cljs.core.Symbol(null,"do","do",-1640528316,null),new cljs.core.Symbol(null,"the-answer","the-answer",2137338451,null)));
-cljs.core.swap_BANG_.call(null,lt.plugins.rolex.compiler.interns,cljs.core.assoc,cljs.core.symbol.call(null,"lt.plugins.rolex.examples","add-the-answer"),lt.plugins.rolex.compiler.inline.call(null,cljs.core.list(new cljs.core.Symbol(null,"fn","fn",-1640528255,null),new cljs.core.Symbol(null,"add-the-answer8485","add-the-answer8485",814437112,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"x","x",-1640531407,null)], null),cljs.core.list(new cljs.core.Symbol(null,"+","+",-1640531484,null),new cljs.core.Symbol(null,"the-answer","the-answer",2137338451,null),new cljs.core.Symbol(null,"x","x",-1640531407,null))),"lt.plugins.rolex.examples"));
-lt.plugins.rolex.examples.add_the_answer = (function add_the_answer(x){return (lt.plugins.rolex.examples.the_answer + x);
-});
-lt.plugins.rolex.examples.inline.call(null,cljs.core.list(new cljs.core.Symbol(null,"do","do",-1640528316,null),cljs.core.list(new cljs.core.Symbol(null,"add-the-answer","add-the-answer",1832199935,null),1)));
-lt.plugins.rolex.examples.add_the_answer_watch = lt.plugins.rolex.compiler.inline.call(null,cljs.core.list(new cljs.core.Symbol(null,"let","let",-1640424492,null),new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"result","result",1720009174,null),cljs.core.list(new cljs.core.Symbol(null,"do","do",-1640528316,null),new cljs.core.Symbol(null,"__SELECTION__","__SELECTION__",-1988549595,null)),new cljs.core.Symbol(null,"display","display",31232635,null),cljs.core.list(new cljs.core.Symbol(null,"if","if",-1640528170,null),cljs.core.list(new cljs.core.Symbol(null,"number?","number?",653920207,null),new cljs.core.Symbol(null,"result","result",1720009174,null)),cljs.core.list(new cljs.core.Symbol(null,"add-the-answer","add-the-answer",1832199935,null),new cljs.core.Symbol(null,"result","result",1720009174,null)),new cljs.core.Symbol(null,"result","result",1720009174,null))], null),new cljs.core.Symbol(null,"__|display|__","__|display|__",-469250897,null),new cljs.core.Symbol(null,"result","result",1720009174,null)),"lt.plugins.rolex.examples");
-cljs.core.swap_BANG_.call(null,lt.plugins.rolex.compiler.aliases,cljs.core.assoc,new cljs.core.Symbol(null,"lt.plugins.rolex.examples","lt.plugins.rolex.examples",159425250,null),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Symbol(null,"cljs","cljs",-1637475029,null),new cljs.core.Symbol(null,"lt.plugins.rolex.cljs","lt.plugins.rolex.cljs",150706699,null)], null));
-lt.plugins.rolex.examples.inline.call(null,cljs.core.list(new cljs.core.Symbol(null,"do","do",-1640528316,null),cljs.core.list(new cljs.core.Symbol(null,"atom?","atom?",-1547384121,null),new cljs.core.Symbol(null,"num","num",-1640422081,null)),cljs.core.list(new cljs.core.Symbol("cljs","atom?","cljs/atom?",-1353190575,null),new cljs.core.Symbol(null,"num","num",-1640422081,null))));
 }
 
 //# sourceMappingURL=rolex_compiled.js.map

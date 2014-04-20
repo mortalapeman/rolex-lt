@@ -4,6 +4,8 @@
             [lt.plugins.rolex.cljs :as cljs :refer [atom?]])
   (:require-macros [lt.plugins.rolex.macros :refer [lense deffn deff alias defwatch]]))
 
+(comment
+
 ;; Helper function for later examples
 (defn inline [form]
   (compiler/inline form "lt.plugins.rolex.examples"))
@@ -83,3 +85,5 @@ alias-example
 ;; Ex: Keymap binding to combine ltobject summarization and values over time
 ;;
 ;;   :editor {"alt-w" [(:rolex.watch.with-lenses :->ltsummarize :->values-over-time )]}
+
+)
