@@ -12,7 +12,7 @@
 
 (defn- resolve-alias [sym current-ns]
   (when-let [ns (->alias sym current-ns)]
-    (get @interns (symbol ns (name sym)))))
+    (get @interns (symbol (str ns) (name sym)))))
 
 
 (defn- resolve-with-current-ns [sym ns]
