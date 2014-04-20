@@ -15,7 +15,7 @@ At the time of writing, custom watches are implemented for Clojure and ClojureSc
 
 #### Quick Start
 
-At the time of writing, there are no facilities provided by Light Table that allow you to define your watches in a resuable and composable way. This project attempts to address that issue with a little macro magic.
+At the time of writing, there are no facilities provided by Light Table that allow you to define your watches in a reusable and composable way. This project attempts to address that issue with a little macro magic.
 
  - **deff**: like def, but saves the source/value of the def
  - **deffn**: like defn, but saves the source code of the function

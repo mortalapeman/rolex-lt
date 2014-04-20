@@ -13,7 +13,7 @@
 
 
 ;; deff and deffn work just like the normal def/defn macros, except that they
-;; capture the value/source of thier def.
+;; capture the value/source of their def.
 (deff the-answer 42)
 
 the-answer
@@ -36,13 +36,13 @@ the-answer
 ; => (do ((fn add-the-answer8764 [x] (+ 42 x)) 1))
 
 
-;; Custom watches are defined with a few evironment variables provided by
+;; Custom watches are defined with a few environment variables provided by
 ;; Light Table: __SELECTION__, __SELECTION*__ and __ID__.
 ;;
-;; All the examples on the mailing list have your defining
-;; custom watches in string form, but there is not reason we can't define
-;; them as code and make them strings later. Rolex provides the defwatch
-;; macro to help with this.
+;; All the examples on the mailing list demonstrate defining
+;; custom watches in string form. Being able to define them in code provides
+;; debugging and readablility benefites. Rolex provides the defwatch macro to
+;; help with this.
 (defwatch add-the-answer-watch
   (let [result (do __SELECTION__)
         display (if (number? result)
@@ -76,11 +76,11 @@ alias-example
 
 ;; TODO: Lenses
 ;;
-;; Lenses are basically just a function with one arg that transforms a value
-;; and then passes it on to the next lense. They can be composed with the :rolex.watch.with-lenses
+;; Lenses are a function with one arg that transforms a value and then passes it
+;; on to the next lense. They can be composed with the :rolex.watch.with-lenses
 ;; command.
 ;;
-;; The lense macro is basicaly just a wrapper around the behavior macro to make defining them
+;; The lense macro is a wrapper around the behavior macro to make defining them
 ;; a little easier.
 ;;
 ;; Ex: Keymap binding to combine ltobject summarization and values over time
