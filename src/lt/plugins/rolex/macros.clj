@@ -33,9 +33,9 @@
   `(def ~sym
      (lt.plugins.rolex.compiler/inline '~@body ~(name (ns-name *ns*)))))
 
-(defmacro lense [keyname & {:keys [alias desc cljs clj]}]
+(defmacro lens [keyname & {:keys [alias desc cljs clj]}]
   `(behavior ~keyname
-          :triggers #{:lense+}
+          :triggers #{:lens+}
           :desc ~desc
           :reaction (fn [this# lenses#]
                       (if-let [var# (condp = (lt.plugins.rolex.core/current-mime)

@@ -61,20 +61,20 @@ Lenses provide composable watch filters so you can string your custom formating 
 :editor {"alt-w" [(:rolex.watch.with-lenses :->ltsummarize :->values-over-time )]}
 ```
 
-##### Defining a lense:
+##### Defining a lens:
 
-The lense macro is basically a light wrapper around the behavior macro.
+The lens macro is basically a light wrapper around the behavior macro.
 
 ```Clojure
 ;; Lenses require the fully qualified namespace of the var at this time.
-(lense ::lense.values-over-time
-       :cljs lt.plugins.rolex.cljs/->values-over-time
-       :clj  lt.plugins.rolex.clj/->values-over-time
-       :alias :->values-over-time
-       :desc "Captures the sequence of values as they pass through the watch")
+(lens ::lens.values-over-time
+      :cljs lt.plugins.rolex.cljs/->values-over-time
+      :clj  lt.plugins.rolex.clj/->values-over-time
+      :alias :->values-over-time
+      :desc "Captures the sequence of values as they pass through the watch")
 ```
 
-Then remember to add the generated behavior to the `:watch-lense` tag.
+Then remember to add the generated behavior to the `:watch-lens` tag.
 
 
 #### More Examples and Other Features
