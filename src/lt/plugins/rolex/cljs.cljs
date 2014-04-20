@@ -2,6 +2,9 @@
   (:require lt.plugins.rolex.compiler)
   (:require-macros [lt.plugins.rolex.macros :as rm]))
 
+;; Generate fake ID for local function testing
+(def __ID__ (str (gensym)))
+
 (rm/deffn atom? [x]
           (when x
             (instance? Atom x)))
@@ -17,18 +20,24 @@
 (rm/deffn capture-values [id x]
          (when-not WATCHLOG
            (def WATCHLOG (atom {})))
-         (swap! WATCHLOG update-in [id] (fnil conj []) result)
+         (swap! WATCHLOG update-in [id] (fnil conj []) x)
          (get @WATCHLOG id "Watch not found"))
+
+(rm/deffn ->values-over-time [x]
+          (capture-values __ID__ x))
 
 (rm/defwatch values-over-time
              (let [result (do __SELECTION__)]
-               __|(capture-values __ID__ result)|__
+               __|(->values-over-time result)|__
                result))
 
 (rm/deffn console-log [exp result]
          (.log js/console (str "Watch: " exp " =>"))
          (.log js/console (clj->js result))
          result)
+
+(rm/deffn ->console-log [x]
+          (console-log (pr-str __SELECTION__) x))
 
 (rm/defwatch to-console-as-jsobj
              (let [exp (pr-str __SELECTION__)

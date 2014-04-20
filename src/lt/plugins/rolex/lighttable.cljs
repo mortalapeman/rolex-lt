@@ -36,15 +36,16 @@
                   (wrap)))
             obj))
 
+(rm/deffn ->summarize [obj]
+          (if (sequential? obj)
+            (mapv summarize obj)
+            (summarize obj)))
 
 (rm/defwatch lt-obj-summary
              (let [result (do __SELECTION__)
-                   display (if (sequential? result)
-                             (mapv summarize result)
-                             (summarize result))]
+                   display (->summarize result)]
                __|display|__
                result))
-
 
 (cmd/command {:command :rolex.watch.lt-objs-summary
               :desc "Rolex: Watch selection and summarize LT objects"

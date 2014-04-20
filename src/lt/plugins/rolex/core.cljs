@@ -1,5 +1,6 @@
 (ns lt.plugins.rolex.core
   (:require [lt.objs.files :as files]
+            [lt.objs.editor.pool :as pool]
             lt.plugins.rolex.compiler)
   (:require-macros [lt.plugins.rolex.macros :as rm]))
 
@@ -11,3 +12,6 @@
 
 (def cljs-mime (delayed-mime "ClojureScript"))
 (def clj-mime (delayed-mime "Clojure"))
+
+(defn current-mime []
+  (ed->mime (pool/last-active)))

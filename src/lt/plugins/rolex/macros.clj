@@ -1,5 +1,6 @@
 (ns lt.plugins.rolex.macros
-  (:require [lt.macros :refer [behavior]])
+  (:require [lt.macros :refer [behavior]]
+            [clojure.string :as string :refer [split]])
   (:refer-clojure :exclude [alias]))
 
 (defmacro deffn [sym args & body]
@@ -32,12 +33,14 @@
   `(def ~sym
      (lt.plugins.rolex.compiler/inline '~@body ~(name (ns-name *ns*)))))
 
-
-(defmacro lense [keyname sym]
+(defmacro lense [keyname & {:keys [alias desc cljs clj]}]
   `(behavior ~keyname
           :triggers #{:lense+}
+          :desc ~desc
           :reaction (fn [this# lenses#]
-                      (assoc lenses#
-                             ~(keyword (str sym))
-                             (get @lt.plugins.rolex.compiler/interns '~sym)))))
+                      (if-let [var# (condp = (lt.plugins.rolex.core/current-mime)
+                                      @lt.plugins.rolex.core/cljs-mime '~cljs
+                                      @lt.plugins.rolex.core/clj-mime '~clj)]
+                        (assoc lenses# ~alias (get @lt.plugins.rolex.compiler/interns var#))
+                        lenses#))))
 

@@ -2,16 +2,22 @@
   (:require lt.plugins.rolex.compiler)
   (:require-macros [lt.plugins.rolex.macros :as rm]))
 
-(rm/deffn log-values [id v]
+;; Generate fake ID for local function testing
+(def __ID__ (str (gensym)))
+
+(rm/deffn capture-values [id v]
          (defonce WATCHLOG (atom {}))
          (swap! WATCHLOG update-in [id] (fnil conj []) v)
          (get @WATCHLOG id "Watch not found"))
 
+(rm/deffn ->values-over-time [x]
+          (capture-values __ID__ x))
+
 (rm/defwatch values-over-time
-             (let [result (do __SELECTION__)
-                   id __ID__]
-               __|(log-values id result)|__
+             (let [result (do __SELECTION__)]
+               __|(->values-over-time result)|__
                result))
+
 
 ;; Provided by Beau Fabry
 ;; https://github.com/bfabry
