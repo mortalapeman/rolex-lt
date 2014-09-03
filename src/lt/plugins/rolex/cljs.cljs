@@ -57,9 +57,19 @@
                res))
 
 (rm/defwatch named-capture
-             (let [res (do __SELECTION__)]
-               (when-not __CAPTURENAME__
-                 (def __CAPTURENAME__ (atom (capture res))))
-               (reset! __CAPTURENAME__ res)
-               __|(str "__CAPTURENAME__: " (pr-str res))|__
-               res))
+  (let [res (do __SELECTION__)]
+    (when-not __CAPTURENAME__
+      (def __CAPTURENAME__ (atom (capture res))))
+    (reset! __CAPTURENAME__ res)
+    __|(str "__CAPTURENAME__: " (pr-str res))|__
+    res))
+
+(rm/deffn inc-watch-count []
+  "Returns number of times this function has been run."
+  (apply + (capture-values __ID__ 1)))
+
+(rm/defwatch trace-count
+  (let [res (do __SELECTION__)
+        c (inc-watch-count)]
+    __|(str "Hit count: " c)|__
+    res))
