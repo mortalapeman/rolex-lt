@@ -132,10 +132,10 @@
 (def lenses (object/create ::watch-lenses))
 
 (rm/defwatch lens-watch
-             (let [result (do __SELECTION__)
-                   display ((comp __LENSES__) result)]
-               __|display|__
-               result))
+  (let [result (do __SELECTION__)
+        display ((comp __LENSES__) result)]
+    __|display|__
+    result))
 
 (defn substitue-lenses [fns]
   (string/replace (str lens-watch)

@@ -6,17 +6,17 @@
 (def __ID__ (str (gensym)))
 
 (rm/deffn capture-values [id v]
-         (defonce WATCHLOG (atom {}))
-         (swap! WATCHLOG update-in [id] (fnil conj []) v)
-         (get @WATCHLOG id "Watch not found"))
+  (defonce WATCHLOG (atom {}))
+  (swap! WATCHLOG update-in [id] (fnil conj []) v)
+  (get @WATCHLOG id "Watch not found"))
 
 (rm/deffn ->values-over-time [x]
-          (capture-values __ID__ x))
+  (capture-values __ID__ x))
 
 (rm/defwatch values-over-time
-             (let [result (do __SELECTION__)]
-               __|(->values-over-time result)|__
-               result))
+  (let [result (do __SELECTION__)]
+    __|(->values-over-time result)|__
+    result))
 
 
 ;; Provided by Beau Fabry
@@ -25,10 +25,10 @@
 ;; This watch provides a rough estimate of the executtion time of a function.
 ;; For more precise measurements a profiler should be used.
 (rm/defwatch convenient-time
-             (let [start (System/currentTimeMillis)
-                   res (do __SELECTION__)]
-               __|(str (- (System/currentTimeMillis) start) " ms")|__
-               res))
+  (let [start (System/currentTimeMillis)
+        res (do __SELECTION__)]
+    __|(str (- (System/currentTimeMillis) start) " ms")|__
+    res))
 
 (rm/deffn inc-watch-count []
   "Returns number of times this function has been run."

@@ -35,12 +35,12 @@
 
 (defmacro lens [keyname & {:keys [alias desc cljs clj]}]
   `(behavior ~keyname
-          :triggers #{:lens+}
-          :desc ~desc
-          :reaction (fn [this# lenses#]
-                      (if-let [var# (condp = (lt.plugins.rolex.core/current-mime)
-                                      @lt.plugins.rolex.core/cljs-mime '~cljs
-                                      @lt.plugins.rolex.core/clj-mime '~clj)]
-                        (assoc lenses# ~alias (get @lt.plugins.rolex.compiler/interns var#))
-                        lenses#))))
+             :triggers #{:lens+}
+             :desc ~desc
+             :reaction (fn [this# lenses#]
+                         (if-let [var# (condp = (lt.plugins.rolex.core/current-mime)
+                                         @lt.plugins.rolex.core/cljs-mime '~cljs
+                                         @lt.plugins.rolex.core/clj-mime '~clj)]
+                           (assoc lenses# ~alias (get @lt.plugins.rolex.compiler/interns var#))
+                           lenses#))))
 
