@@ -41,6 +41,16 @@
                                        nil)]
                         (cmd/exec! :editor.watch.custom-watch-selection (str exp))))})
 
+(cmd/command {:command :rolex.watch.trace-count
+              :desc "Rolex: Count times selection is executed"
+              :exec (fn []
+                      (when-let [exp (condp = (ed->mime (pool/last-active))
+                                       @cljs-mime cljs/trace-count
+                                       @clj-mime  clj/trace-count
+                                       nil)]
+                        (cmd/exec! :editor.watch.custom-watch-selection (str exp) {:verbatim true})))})
+
+
 ;;****************************************************
 ;; Named Capture
 ;;****************************************************
@@ -122,10 +132,10 @@
 (def lenses (object/create ::watch-lenses))
 
 (rm/defwatch lens-watch
-             (let [result (do __SELECTION__)
-                   display ((comp __LENSES__) result)]
-               __|display|__
-               result))
+  (let [result (do __SELECTION__)
+        display ((comp __LENSES__) result)]
+    __|display|__
+    result))
 
 (defn substitue-lenses [fns]
   (string/replace (str lens-watch)
